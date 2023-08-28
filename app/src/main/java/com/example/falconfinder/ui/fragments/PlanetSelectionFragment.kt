@@ -7,10 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.falconfinder.R
+import com.example.falconfinder.databinding.FragmentPlanetSelectionBinding
+import com.example.falconfinder.models.PlanetResponseItem
+import com.example.falconfinder.models.VehicleResponseItem
+import com.example.falconfinder.ui.ItemClickListener
+import com.example.falconfinder.ui.PlanetVehicleAdapter
 import com.example.falconfinder.ui.viewmodel.StarWarViewModel
 
 /**
@@ -18,9 +22,11 @@ import com.example.falconfinder.ui.viewmodel.StarWarViewModel
  * Use the [PlanetSelectionFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PlanetSelectionFragment : Fragment() {
+class PlanetSelectionFragment : Fragment(), ItemClickListener {
 
     lateinit var viewModel: StarWarViewModel
+    lateinit var adapter: PlanetVehicleAdapter
+    lateinit var binding: FragmentPlanetSelectionBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -28,9 +34,10 @@ class PlanetSelectionFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_planet_selection, container, false)
+        binding = FragmentPlanetSelectionBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onStart() {
@@ -39,6 +46,13 @@ class PlanetSelectionFragment : Fragment() {
     }
 
    private fun initViews(){
+
+       adapter = PlanetVehicleAdapter(this)
+
+       binding.planetsRv.layoutManager = GridLayoutManager(requireContext(), 2)
+
+       binding.planetsRv.adapter = adapter
+
        viewModel = ViewModelProvider(requireActivity())[StarWarViewModel::class.java]
 
        initObservers()
@@ -49,6 +63,7 @@ class PlanetSelectionFragment : Fragment() {
    private fun initObservers(){
         viewModel.planetsLD.observe(viewLifecycleOwner, Observer {
             Log.d("PlanetSelectionFragment", it.toString())
+            adapter.submitList(it as List<Any>?)
         })
     }
 
@@ -60,6 +75,14 @@ class PlanetSelectionFragment : Fragment() {
             PlanetSelectionFragment().apply {
 
             }
+
+    }
+
+    override fun onPlanetClicked(planetResponseItem: PlanetResponseItem) {
+
+    }
+
+    override fun onVehicleClickListener(vehicleResponseItem: VehicleResponseItem) {
 
     }
 }

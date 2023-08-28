@@ -22,10 +22,10 @@
         <ImageView
             android:id="@+id/planet_iv"
             android:layout_width="@dimen/planet_width"
-            android:layout_height="@dimen/planet_height"
+            android:layout_height="@dimen/planet_width"
             android:scaleType="fitXY"
             android:contentDescription="@string/planet_image"
-            app:srcCompat = "@drawable/ic_launcher_background" />
+            app:srcCompat="@drawable/jebing_d45dffae" />
 
         <TextView
             android:id="@+id/planet_name_tv"
@@ -33,8 +33,16 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textAlignment="center"
-            android:textColor="@color/material_dynamic_neutral40"
-            android:text="Pratik" />
+            android:text="Planet Name" />
+
+        <TextView
+            android:id="@+id/distance_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:text="distance" />
+
     </LinearLayout>
 
 
