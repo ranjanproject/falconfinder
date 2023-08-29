@@ -15,6 +15,7 @@ import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
 import com.example.falconfinder.ui.ItemClickListener
 import com.example.falconfinder.ui.PlanetVehicleAdapter
+import com.example.falconfinder.ui.PlanetVehicleItemDecorator
 import com.example.falconfinder.ui.viewmodel.StarWarViewModel
 
 /**
@@ -46,21 +47,30 @@ class PlanetSelectionFragment : Fragment(), ItemClickListener {
     }
 
    private fun initViews(){
+       initRv()
+       initViewModel()
+    }
 
-       adapter = PlanetVehicleAdapter(this)
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(requireActivity())[StarWarViewModel::class.java]
 
-       binding.planetsRv.layoutManager = GridLayoutManager(requireContext(), 2)
+        initObservers()
 
-       binding.planetsRv.adapter = adapter
+        viewModel.getPlanets()
+    }
 
-       viewModel = ViewModelProvider(requireActivity())[StarWarViewModel::class.java]
+    private fun initRv() {
+        adapter = PlanetVehicleAdapter(this)
 
-       initObservers()
-       viewModel.getPlanets()
+        binding.planetsRv.addItemDecoration(PlanetVehicleItemDecorator())
+
+        binding.planetsRv.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        binding.planetsRv.adapter = adapter
     }
 
 
-   private fun initObservers(){
+    private fun initObservers(){
         viewModel.planetsLD.observe(viewLifecycleOwner, Observer {
             Log.d("PlanetSelectionFragment", it.toString())
             adapter.submitList(it as List<Any>?)
@@ -78,7 +88,7 @@ class PlanetSelectionFragment : Fragment(), ItemClickListener {
 
     }
 
-    override fun onPlanetClicked(planetResponseItem: PlanetResponseItem) {
+    override fun onPlanetClicked(planetResponseItem: PlanetResponseItem, isSelected: Boolean) {
 
     }
 

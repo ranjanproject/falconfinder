@@ -5,7 +5,7 @@ import com.example.falconfinder.models.VehicleResponseItem
 
 interface ItemClickListener {
 
-    fun onPlanetClicked(planetResponseItem: PlanetResponseItem)
+    fun onPlanetClicked(planetResponseItem: PlanetResponseItem, isSelected: Boolean)
 
     fun onVehicleClickListener(vehicleResponseItem: VehicleResponseItem)
 
