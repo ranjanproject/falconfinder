@@ -13,7 +13,16 @@ class StarWarRepository() {
     }
 
     suspend fun getVehicle(): VehicleResponse{
-        return networkDataSource.getRockets()
+        return onGetVehicleResponse(networkDataSource.getRockets())
+    }
+
+    private fun onGetVehicleResponse(vehicleResponse: VehicleResponse): VehicleResponse{
+        vehicleResponse.forEach {
+            it.isActive = true
+            it.isSelected = false
+        }
+
+        return vehicleResponse
     }
 
 }

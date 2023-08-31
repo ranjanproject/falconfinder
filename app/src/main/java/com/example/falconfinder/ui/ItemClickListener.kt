@@ -7,6 +7,6 @@ interface ItemClickListener {
 
     fun onPlanetClicked(planetResponseItem: PlanetResponseItem, isSelected: Boolean)
 
-    fun onVehicleClickListener(vehicleResponseItem: VehicleResponseItem)
+    fun onVehicleClickListener(vehicleResponseItem: VehicleResponseItem, isSelected: Boolean)
 
 }

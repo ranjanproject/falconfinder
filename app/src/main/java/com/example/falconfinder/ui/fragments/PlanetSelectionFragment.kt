@@ -25,9 +25,10 @@ import com.example.falconfinder.ui.viewmodel.StarWarViewModel
  */
 class PlanetSelectionFragment : Fragment(), ItemClickListener {
 
-    lateinit var viewModel: StarWarViewModel
-    lateinit var adapter: PlanetVehicleAdapter
-    lateinit var binding: FragmentPlanetSelectionBinding
+    private lateinit var viewModel: StarWarViewModel
+    private lateinit var adapter: PlanetVehicleAdapter
+    private lateinit var binding: FragmentPlanetSelectionBinding
+    private lateinit var vehicleBottomSheetFragment: VehicleBottomSheetFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -38,17 +39,21 @@ class PlanetSelectionFragment : Fragment(), ItemClickListener {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentPlanetSelectionBinding.inflate(inflater, container, false)
+
+        initViews()
+
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        initViews()
     }
 
    private fun initViews(){
        initRv()
        initViewModel()
+
+       vehicleBottomSheetFragment = VehicleBottomSheetFragment.newInstance("", "")
     }
 
     private fun initViewModel() {
@@ -57,6 +62,8 @@ class PlanetSelectionFragment : Fragment(), ItemClickListener {
         initObservers()
 
         viewModel.getPlanets()
+
+        viewModel.getVehicles()
     }
 
     private fun initRv() {
@@ -89,10 +96,20 @@ class PlanetSelectionFragment : Fragment(), ItemClickListener {
     }
 
     override fun onPlanetClicked(planetResponseItem: PlanetResponseItem, isSelected: Boolean) {
+        if(isSelected) {
+            val bundle = Bundle()
+            bundle.putString(VehicleBottomSheetFragment.PLANET_NAME, planetResponseItem.name)
+            bundle.putString(
+                VehicleBottomSheetFragment.PLANET_DISTANCE,
+                planetResponseItem.distance.toString()
+            )
+            vehicleBottomSheetFragment.arguments = bundle
+            vehicleBottomSheetFragment.show(childFragmentManager, "BottomSheet")
+        }
 
     }
 
-    override fun onVehicleClickListener(vehicleResponseItem: VehicleResponseItem) {
+    override fun onVehicleClickListener(vehicleResponseItem: VehicleResponseItem, isSelected: Boolean) {
 
     }
 }

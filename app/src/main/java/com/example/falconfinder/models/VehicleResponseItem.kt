@@ -1,19 +1,25 @@
 package com.example.falconfinder.models
 
+import android.os.Build
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.RequiresApi
 
 data class VehicleResponseItem(
     val max_distance: Int,
     val name: String?,
     val speed: Int,
-    val total_no: Int
+    var total_no: Int,
+    var isSelected: Boolean = false,
+    var isActive: Boolean = true
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readString(),
         parcel.readInt(),
-        parcel.readInt()
+        parcel.readInt(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readByte() != 0.toByte()
     ) {
     }
 
@@ -22,6 +28,8 @@ data class VehicleResponseItem(
         parcel.writeString(name)
         parcel.writeInt(speed)
         parcel.writeInt(total_no)
+        parcel.writeByte(if (isSelected) 1 else 0)
+        parcel.writeByte(if (isActive) 1 else 0)
     }
 
     override fun describeContents(): Int {
@@ -38,6 +46,8 @@ data class VehicleResponseItem(
         if (name != other.name) return false
         if (speed != other.speed) return false
         if (total_no != other.total_no) return false
+        if (isSelected != other.isSelected) return false
+        if (isActive != other.isActive) return false
 
         return true
     }
@@ -47,6 +57,8 @@ data class VehicleResponseItem(
         result = 31 * result + (name?.hashCode() ?: 0)
         result = 31 * result + speed
         result = 31 * result + total_no
+        result = 31 * result + isSelected.hashCode()
+        result = 31 * result + isActive.hashCode()
         return result
     }
 
