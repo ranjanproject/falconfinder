@@ -9,9 +9,16 @@ class StarWarRepository() {
     private val networkDataSource = NetworkDataSource()
 
     suspend fun getPlanets(): PlanetResponse{
-        return networkDataSource.getPlanets()
+        return onGetPlanetsResponse(networkDataSource.getPlanets())
     }
 
+    private fun onGetPlanetsResponse(planetResponse: PlanetResponse): PlanetResponse{
+        planetResponse.forEach {
+            it.isActive = true
+            it.isSelected = false
+        }
+        return planetResponse
+    }
     suspend fun getVehicle(): VehicleResponse{
         return onGetVehicleResponse(networkDataSource.getRockets())
     }

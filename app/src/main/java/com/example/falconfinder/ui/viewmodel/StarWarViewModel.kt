@@ -27,6 +27,8 @@ class StarWarViewModel: ViewModel(){
     private val rocketMap = mutableMapOf<String, VehicleResponseItem?>()
 
     private var _vehicleResponse = mutableListOf<VehicleResponseItem>()
+
+    private var selectedPlanetCount = 0
     fun getPlanets(){
         viewModelScope.launch {
             try{
@@ -39,6 +41,53 @@ class StarWarViewModel: ViewModel(){
         }
     }
 
+
+   fun getAvailablePlanets(){
+
+       _planetsMLD.value = _planets
+   }
+
+   fun selectPlanet(planetResponseItem: PlanetResponseItem, isSelected: Boolean){
+
+       if(isSelected){
+           selectedPlanetCount++
+       }else{
+           selectedPlanetCount--
+
+           val vehicle = rocketMap[planetResponseItem.name]
+
+           vehicle?.total_no = vehicle?.total_no!! + 1
+           vehicle.isActive = true
+
+           rocketMap[planetResponseItem.name!!] = null
+       }
+
+       planetResponseItem.isSelected = isSelected
+
+       if(selectedPlanetCount < 4){
+           _planets?.let {planetResponse ->
+               planetResponse.forEach{
+                   if(!it.isSelected){
+                       it.isActive = true
+                   }
+               }
+           }
+       }else{
+           _planets?.let {planetResponse ->
+               planetResponse.forEach{
+                   if(!it.isSelected){
+                       it.isActive = false
+                   }
+               }
+           }
+       }
+
+        _planets?.let {
+            _planetsMLD.value = (it.toMutableList()) as ArrayList<PlanetResponseItem>
+       }
+   }
+
+    //<editor-fold desc="Vehicle">
     fun getVehicles(){
         viewModelScope.launch {
             try{
@@ -96,8 +145,6 @@ class StarWarViewModel: ViewModel(){
         }
 
     }
-
-
-
+    //</editor-fold>
 
 }

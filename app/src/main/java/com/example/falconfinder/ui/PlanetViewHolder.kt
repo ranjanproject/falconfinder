@@ -31,14 +31,26 @@ class PlanetViewHolder(private val binding: ItemPlanetBinding): RecyclerView.Vie
 
         binding.distanceTv.text = planetResponseItem.distance.toString()
 
+        binding.planetCl.isSelected = planetResponseItem.isSelected
+
         planetResponseItem.name?.let { getImageResource(it) }
             ?.let { binding.planetIv.setImageResource(it) }
 
-        binding.planetCl.setOnClickListener {
+        if(planetResponseItem.isActive){
+            binding.planetCl.setBackgroundResource(R.drawable.item_selector)
+        }else{
+            binding.planetCl.setBackgroundResource(R.drawable.item_inactive_state)
+        }
 
-            binding.planetCl.isSelected = !binding.planetCl.isSelected
+        if(planetResponseItem.isActive) {
+            binding.planetCl.setOnClickListener {
 
-            itemClickListener.onPlanetClicked(planetResponseItem,  binding.planetCl.isSelected)
+                binding.planetCl.isSelected = !binding.planetCl.isSelected
+
+                itemClickListener.onPlanetClicked(planetResponseItem, binding.planetCl.isSelected)
+            }
+        }else{
+            binding.planetCl.setOnClickListener(null)
         }
 
     }

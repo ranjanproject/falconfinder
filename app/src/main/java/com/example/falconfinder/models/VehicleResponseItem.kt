@@ -10,6 +10,8 @@ data class VehicleResponseItem(
     val name: String?,
     val speed: Int,
     var total_no: Int,
+
+    //custom fields to control the state of the item
     var isSelected: Boolean = false,
     var isActive: Boolean = true
 ) : Parcelable {

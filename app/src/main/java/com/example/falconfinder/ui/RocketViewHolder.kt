@@ -42,6 +42,8 @@ class RocketViewHolder(private val binding: ItemVehicleBinding):
           binding.rocketCl.setOnClickListener {
               itemClickListener.onVehicleClickListener(vehicleResponseItem, !binding.rocketCl.isSelected)
           }
+      }else{
+          binding.rocketCl.setOnClickListener(null)
       }
     }
 

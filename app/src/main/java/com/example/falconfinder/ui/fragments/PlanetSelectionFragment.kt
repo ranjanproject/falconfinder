@@ -96,6 +96,7 @@ class PlanetSelectionFragment : Fragment(), ItemClickListener {
     }
 
     override fun onPlanetClicked(planetResponseItem: PlanetResponseItem, isSelected: Boolean) {
+        viewModel.selectPlanet(planetResponseItem, isSelected)
         if(isSelected) {
             val bundle = Bundle()
             bundle.putString(VehicleBottomSheetFragment.PLANET_NAME, planetResponseItem.name)
