@@ -1,10 +1,9 @@
-package com.example.falconfinder
+package com.example.falconfinder.network
 
 import com.example.falconfinder.models.FalconFinderRequestBody
 import com.example.falconfinder.models.FalconFinderResponse
 import com.example.falconfinder.models.PlanetResponse
 import com.example.falconfinder.models.VehicleResponse
-import com.example.falconfinder.network.PlanetApi
 import com.example.falconfinder.services.PlanetAndRocketServices
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

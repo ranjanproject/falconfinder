@@ -1,6 +1,6 @@
 package com.example.falconfinder.repository
 
-import com.example.falconfinder.NetworkDataSource
+import com.example.falconfinder.network.NetworkDataSource
 import com.example.falconfinder.models.FalconFinderRequestBody
 import com.example.falconfinder.models.FalconFinderResponse
 import com.example.falconfinder.models.PlanetResponse

@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity(), FindFalconClickListener {
 
         addPlanetSelectionFragment()
 
-
     }
 
     private fun addPlanetSelectionFragment() {
