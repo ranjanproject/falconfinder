@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ViewGroup
 import com.example.falconfinder.databinding.ActivityMainBinding
+import com.example.falconfinder.ui.FindFalconClickListener
+import com.example.falconfinder.ui.fragments.FalconFinderResultFragment
 import com.example.falconfinder.ui.fragments.PlanetSelectionFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FindFalconClickListener {
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,12 +23,35 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
 
+        addPlanetSelectionFragment()
+
+
+    }
+
+    private fun addPlanetSelectionFragment() {
         val ft = supportFragmentManager.beginTransaction()
 
-        val fragment = PlanetSelectionFragment()
+        val fragment = PlanetSelectionFragment(this)
 
-        ft.add(R.id.activity_fl, fragment)
+        ft.replace(R.id.activity_fl, fragment)
 
         ft.commit()
+    }
+
+    private fun addFindFalconFinderFragment(){
+        val ft = supportFragmentManager.beginTransaction()
+
+        val fragment = FalconFinderResultFragment(this)
+
+        ft.replace(R.id.activity_fl, fragment)
+
+        ft.commit()
+    }
+    override fun onFindFalconBtnClicked() {
+        addFindFalconFinderFragment()
+    }
+
+    override fun onStartBtnClicked() {
+        addPlanetSelectionFragment()
     }
 }

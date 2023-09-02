@@ -1,6 +1,8 @@
 package com.example.falconfinder.repository
 
 import com.example.falconfinder.NetworkDataSource
+import com.example.falconfinder.models.FalconFinderRequestBody
+import com.example.falconfinder.models.FalconFinderResponse
 import com.example.falconfinder.models.PlanetResponse
 import com.example.falconfinder.models.VehicleResponse
 
@@ -30,6 +32,14 @@ class StarWarRepository() {
         }
 
         return vehicleResponse
+    }
+
+    suspend fun getToken(): String{
+        return networkDataSource.getToken()
+    }
+
+    suspend fun findFalcon(falconFinderRequestBody: FalconFinderRequestBody): FalconFinderResponse{
+        return networkDataSource.findFalcon(falconFinderRequestBody = falconFinderRequestBody)
     }
 
 }

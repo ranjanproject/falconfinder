@@ -4,12 +4,13 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.falconfinder.models.FalconFinderRequestBody
 import com.example.falconfinder.models.PlanetResponse
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
 import com.example.falconfinder.repository.StarWarRepository
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import kotlin.Exception
 
 /**
  * This viewmodel will be shared between four different fragments
@@ -29,6 +30,10 @@ class StarWarViewModel: ViewModel(){
     private var _vehicleResponse = mutableListOf<VehicleResponseItem>()
 
     private var selectedPlanetCount = 0
+
+    private var token: String = ""
+
+    val isFindFalconBtn = MutableLiveData<Boolean>()
     fun getPlanets(){
         viewModelScope.launch {
             try{
@@ -41,13 +46,42 @@ class StarWarViewModel: ViewModel(){
         }
     }
 
+    fun getToken(){
+        viewModelScope.launch {
+            try {
+                token = repository.getToken()
+            }catch (e: Exception){
+                Log.e("viewModel", e.toString())
 
-   fun getAvailablePlanets(){
+            }
+        }
+    }
 
-       _planetsMLD.value = _planets
-   }
+    fun findFalcon(){
+        viewModelScope.launch {
+            try {
+                val x = repository.findFalcon(getFalconRequestBody())
+                val y = 0
+            }catch (e: Exception){
+                Log.e("viewModel", e.toString())
 
-   fun selectPlanet(planetResponseItem: PlanetResponseItem, isSelected: Boolean){
+            }
+        }
+    }
+
+    private fun getFalconRequestBody(): FalconFinderRequestBody {
+        val planetList = mutableListOf<String>()
+        val vehicleList = mutableListOf<String>()
+        rocketMap.forEach{entry ->
+            planetList.add(entry.key)
+            entry.value?.let{
+                vehicleList.add(it.name!!)
+            }
+        }
+        return FalconFinderRequestBody(token, planetList, vehicleList)
+    }
+
+    fun selectPlanet(planetResponseItem: PlanetResponseItem, isSelected: Boolean){
 
        if(isSelected){
            selectedPlanetCount++
@@ -72,6 +106,7 @@ class StarWarViewModel: ViewModel(){
                    }
                }
            }
+           isFindFalconBtn.value = false
        }else{
            _planets?.let {planetResponse ->
                planetResponse.forEach{
@@ -80,6 +115,8 @@ class StarWarViewModel: ViewModel(){
                    }
                }
            }
+           isFindFalconBtn.value = true
+
        }
 
         _planets?.let {

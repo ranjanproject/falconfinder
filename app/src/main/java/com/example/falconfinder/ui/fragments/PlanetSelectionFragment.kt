@@ -13,6 +13,7 @@ import com.example.falconfinder.R
 import com.example.falconfinder.databinding.FragmentPlanetSelectionBinding
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
+import com.example.falconfinder.ui.FindFalconClickListener
 import com.example.falconfinder.ui.ItemClickListener
 import com.example.falconfinder.ui.PlanetVehicleAdapter
 import com.example.falconfinder.ui.PlanetVehicleItemDecorator
@@ -23,7 +24,7 @@ import com.example.falconfinder.ui.viewmodel.StarWarViewModel
  * Use the [PlanetSelectionFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PlanetSelectionFragment : Fragment(), ItemClickListener {
+class PlanetSelectionFragment(private val findFalconClickListener: FindFalconClickListener) : Fragment(), ItemClickListener {
 
     private lateinit var viewModel: StarWarViewModel
     private lateinit var adapter: PlanetVehicleAdapter
@@ -54,6 +55,15 @@ class PlanetSelectionFragment : Fragment(), ItemClickListener {
        initViewModel()
 
        vehicleBottomSheetFragment = VehicleBottomSheetFragment.newInstance("", "")
+
+       binding.findFalconBtn.setOnClickListener {
+
+           findFalconClickListener.onFindFalconBtnClicked()
+
+           viewModel.findFalcon()
+
+
+       }
     }
 
     private fun initViewModel() {
@@ -64,6 +74,8 @@ class PlanetSelectionFragment : Fragment(), ItemClickListener {
         viewModel.getPlanets()
 
         viewModel.getVehicles()
+
+        viewModel.getToken()
     }
 
     private fun initRv() {
@@ -82,14 +94,18 @@ class PlanetSelectionFragment : Fragment(), ItemClickListener {
             Log.d("PlanetSelectionFragment", it.toString())
             adapter.submitList(it as List<Any>?)
         })
+        viewModel.isFindFalconBtn.observe(viewLifecycleOwner) {
+            findFalconClickListener.onFindFalconBtnClicked()
+            binding.findFalconBtn.isClickable = it
+        }
     }
 
 
     companion object {
 
         @JvmStatic
-        fun newInstance() =
-            PlanetSelectionFragment().apply {
+        fun newInstance(findFalconClickListener: FindFalconClickListener) =
+            PlanetSelectionFragment(findFalconClickListener).apply {
 
             }
 
