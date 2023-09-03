@@ -2,7 +2,10 @@ package com.example.falconfinder
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.falconfinder.databinding.ActivityMainBinding
 import com.example.falconfinder.ui.FindFalconClickListener
 import com.example.falconfinder.ui.fragments.FalconFinderResultFragment
@@ -18,6 +21,8 @@ class MainActivity : AppCompatActivity(), FindFalconClickListener {
 
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
+
         initViews()
     }
 
@@ -27,6 +32,21 @@ class MainActivity : AppCompatActivity(), FindFalconClickListener {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        onGameRuleSelected()
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    private fun onGameRuleSelected(){
+        Toast.makeText(this, "Rule selected", Toast.LENGTH_LONG).show()
+    }
     private fun addPlanetSelectionFragment() {
         val ft = supportFragmentManager.beginTransaction()
 

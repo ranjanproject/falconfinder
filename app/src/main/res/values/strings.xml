@@ -4,4 +4,5 @@
     <string name="planet_image">planet image</string>
     <string name="select_vehicle_for_planet"></string>
     <string name="congratulations">Success! Congratulations on finding Falcone. King Shan is mighty pleased.</string>
+    <string name="game_rule">Game Rule</string>
 </resources>

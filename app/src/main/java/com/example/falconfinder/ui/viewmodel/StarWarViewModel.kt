@@ -8,6 +8,7 @@ import com.example.falconfinder.models.FalconFinderRequestBody
 import com.example.falconfinder.models.PlanetResponse
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
+import com.example.falconfinder.network.Result
 import com.example.falconfinder.repository.StarWarRepository
 import kotlinx.coroutines.launch
 import kotlin.Exception
@@ -15,7 +16,7 @@ import kotlin.Exception
 /**
  * This viewmodel will be shared between four different fragments
  */
-class StarWarViewModel: ViewModel(){
+class StarWarViewModel : ViewModel() {
 
     private val repository = StarWarRepository()
 
@@ -35,42 +36,43 @@ class StarWarViewModel: ViewModel(){
 
     val isFindFalconBtn = MutableLiveData<Boolean>()
 
-    fun getToken(){
+    fun getToken() {
         viewModelScope.launch {
             try {
                 token = repository.getToken()
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("viewModel", e.toString())
 
             }
         }
     }
 
-    fun clearModels(){
+    fun clearModels() {
         selectedPlanetCount = 0
         rocketMap = mutableMapOf()
         token = ""
         _vehicleResponse = mutableListOf()
     }
 
-    fun getPlanets(){
+    //<editor-fold desc = "Planet">
+    fun getPlanets() {
         viewModelScope.launch {
-            try{
+            try {
                 _planets = repository.getPlanets()
 
                 _planetsMLD.value = _planets
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("viewModel", e.toString())
             }
         }
     }
 
-    fun findFalcon(){
+    fun findFalcon() {
         viewModelScope.launch {
             try {
                 val x = repository.findFalcon(getFalconRequestBody())
                 val y = 0
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("viewModel", e.toString())
 
             }
@@ -80,9 +82,9 @@ class StarWarViewModel: ViewModel(){
     private fun getFalconRequestBody(): FalconFinderRequestBody {
         val planetList = mutableListOf<String>()
         val vehicleList = mutableListOf<String>()
-        rocketMap.forEach{entry ->
+        rocketMap.forEach { entry ->
             planetList.add(entry.key)
-            entry.value?.let{
+            entry.value?.let {
                 vehicleList.add(it.name!!)
             }
         }
@@ -90,86 +92,87 @@ class StarWarViewModel: ViewModel(){
     }
 
 
-    fun selectPlanet(planetResponseItem: PlanetResponseItem, isSelected: Boolean){
+    fun selectPlanet(planetResponseItem: PlanetResponseItem, isSelected: Boolean) {
 
-       updateSelectedPlanetCount(planetResponseItem, isSelected)
+        updateSelectedPlanetCount(planetResponseItem, isSelected)
 
-       planetResponseItem.isSelected = isSelected
+        planetResponseItem.isSelected = isSelected
 
-       enableFindFalconBtn()
+        enableFindFalconBtn()
 
         _planets?.let {
             _planetsMLD.value = (it.toMutableList()) as ArrayList<PlanetResponseItem>
-       }
-   }
+        }
+    }
 
-   private fun updateSelectedPlanetCount(planetResponseItem: PlanetResponseItem, isSelected: Boolean){
-       if(isSelected){
-           selectedPlanetCount++
-       }else{
-           selectedPlanetCount--
+    private fun updateSelectedPlanetCount(
+        planetResponseItem: PlanetResponseItem,
+        isSelected: Boolean
+    ) {
+        if (isSelected) {
+            selectedPlanetCount++
+        } else {
+            selectedPlanetCount--
 
-           val vehicle = rocketMap[planetResponseItem.name]
+            val vehicle = rocketMap[planetResponseItem.name]
 
-           vehicle?.total_no = vehicle?.total_no!! + 1
-           vehicle.isActive = true
+            vehicle?.total_no = vehicle?.total_no!! + 1
+            vehicle.isActive = true
 
-           rocketMap[planetResponseItem.name!!] = null
-       }
-   }
+            rocketMap[planetResponseItem.name!!] = null
+        }
+    }
 
-   private fun enableFindFalconBtn(){
-       if(selectedPlanetCount < 4){
-           _planets?.let {planetResponse ->
-               planetResponse.forEach{
-                   if(!it.isSelected){
-                       it.isActive = true
-                   }
-               }
-           }
-           isFindFalconBtn.value = false
-       }else{
-           _planets?.let {planetResponse ->
-               planetResponse.forEach{
-                   if(!it.isSelected){
-                       it.isActive = false
-                   }
-               }
-           }
-           isFindFalconBtn.value = true
-       }
-   }
+    private fun enableFindFalconBtn() {
+        if (selectedPlanetCount < 4) {
+            _planets?.let { planetResponse ->
+                planetResponse.forEach {
+                    if (!it.isSelected) {
+                        it.isActive = true
+                    }
+                }
+            }
+            isFindFalconBtn.value = false
+        } else {
+            _planets?.let { planetResponse ->
+                planetResponse.forEach {
+                    if (!it.isSelected) {
+                        it.isActive = false
+                    }
+                }
+            }
+            isFindFalconBtn.value = true
+        }
+    }
+    //</editor-fold>
+
 
     //<editor-fold desc="Vehicle">
-    fun getVehicles(){
+    fun getVehicles() {
         viewModelScope.launch {
-            try{
+            try {
                 _vehicleResponse = repository.getVehicle().toMutableList()
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("viewModel", e.toString())
             }
         }
     }
 
 
-
-
-    fun getVehicleList(): List<VehicleResponseItem>{
+    fun getVehicleList(): List<VehicleResponseItem> {
         return _vehicleResponse
     }
 
 
-
-    fun getAvailableVehicles(planetName: String): List<VehicleResponseItem>{
-        for(item in rocketMap){
-           item.value?.let {
-               it.isActive = it.total_no > 0
-               it.isSelected = false
-           }
+    fun getAvailableVehicles(planetName: String): List<VehicleResponseItem> {
+        for (item in rocketMap) {
+            item.value?.let {
+                it.isActive = it.total_no > 0
+                it.isSelected = false
+            }
         }
         return _vehicleResponse
     }
-
 
 
     fun selectRocket(
@@ -177,17 +180,17 @@ class StarWarViewModel: ViewModel(){
         planetDistance: String,
         vehicleResponseItem: VehicleResponseItem,
         isSelected: Boolean
-    ){
+    ) {
 
-        if(isSelected){
+        if (isSelected) {
             vehicleResponseItem.total_no--
-                for (item in _vehicleResponse) {
-                    if (item != vehicleResponseItem && item.isSelected && item.isActive) {
-                        item.isSelected = false
-                        item.total_no++
-                    }
+            for (item in _vehicleResponse) {
+                if (item != vehicleResponseItem && item.isSelected && item.isActive) {
+                    item.isSelected = false
+                    item.total_no++
                 }
-        }else{
+            }
+        } else {
             vehicleResponseItem.total_no++
         }
         vehicleResponseItem.isSelected = isSelected
@@ -200,10 +203,10 @@ class StarWarViewModel: ViewModel(){
         isSelected: Boolean,
         vehicleResponseItem: VehicleResponseItem
     ) {
-        if(isSelected){
+        if (isSelected) {
             rocketMap[planetName] = vehicleResponseItem
-        }else{
-            rocketMap[planetName]  = null
+        } else {
+            rocketMap[planetName] = null
         }
     }
     //</editor-fold>
