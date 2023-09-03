@@ -16,13 +16,11 @@ import javax.inject.Inject
 import kotlin.Exception
 
 /**
- * This viewmodel will be shared between four different fragments
+ * This viewmodel will be shared between three different fragments
  */
 
 @HiltViewModel
 class StarWarViewModel @Inject constructor(private val repository: StarWarRepository) : ViewModel() {
-
-//    private val repository = StarWarRepository()
 
     private var _planets: PlanetResponse? = null
 

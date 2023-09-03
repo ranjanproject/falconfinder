@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,16 +22,10 @@ import com.example.falconfinder.ui.viewmodel.StarWarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PlanetSelectionFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-
 @AndroidEntryPoint
 class PlanetSelectionFragment @Inject constructor(private val findFalconClickListener: FindFalconClickListener) : Fragment(), ItemClickListener {
 
-    private lateinit var viewModel: StarWarViewModel
+    private val viewModel by activityViewModels<StarWarViewModel>()
 
     @Inject lateinit var adapter: PlanetVehicleAdapter
     @Inject lateinit var vehicleBottomSheetFragment: VehicleBottomSheetFragment
@@ -60,8 +55,6 @@ class PlanetSelectionFragment @Inject constructor(private val findFalconClickLis
        initRv()
        initViewModel()
 
-       vehicleBottomSheetFragment = VehicleBottomSheetFragment.newInstance("", "")
-
        binding.findFalconBtn.setOnClickListener {
 
            findFalconClickListener.onFindFalconBtnClicked()
@@ -73,7 +66,6 @@ class PlanetSelectionFragment @Inject constructor(private val findFalconClickLis
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(requireActivity())[StarWarViewModel::class.java]
 
         initObservers()
 
@@ -100,8 +92,8 @@ class PlanetSelectionFragment @Inject constructor(private val findFalconClickLis
             Log.d("PlanetSelectionFragment", it.toString())
             adapter.submitList(it as List<Any>?)
         })
+
         viewModel.isFindFalconBtn.observe(viewLifecycleOwner) {
-            findFalconClickListener.onFindFalconBtnClicked()
             binding.findFalconBtn.isClickable = it
         }
     }

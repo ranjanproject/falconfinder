@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.falconfinder.databinding.BottomSheetVehicleFragmentBinding
@@ -23,8 +24,10 @@ class VehicleBottomSheetFragment @Inject constructor() : BottomSheetDialogFragme
     private lateinit var binding: BottomSheetVehicleFragmentBinding
     private var planetName = ""
     private var planetDistance = ""
-    private lateinit var viewModel: StarWarViewModel
-    private lateinit var adapter: PlanetVehicleAdapter
+
+    private val viewModel by activityViewModels<StarWarViewModel>()
+
+    @Inject lateinit var adapter: PlanetVehicleAdapter
     companion object {
 
         const val PLANET_NAME = "planetName"
@@ -65,10 +68,6 @@ class VehicleBottomSheetFragment @Inject constructor() : BottomSheetDialogFragme
 
     private fun initViews() {
         setNames()
-
-        viewModel = ViewModelProvider(requireActivity())[StarWarViewModel::class.java]
-
-        adapter = PlanetVehicleAdapter(this)
 
         binding.rocketRv.layoutManager = LinearLayoutManager(requireContext())
 
