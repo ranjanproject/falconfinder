@@ -11,14 +11,14 @@ import com.example.falconfinder.models.VehicleResponseItem
 import com.example.falconfinder.network.Result
 import com.example.falconfinder.repository.StarWarRepository
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.Exception
 
 /**
  * This viewmodel will be shared between four different fragments
  */
-class StarWarViewModel : ViewModel() {
+class StarWarViewModel @Inject constructor(private val repository: StarWarRepository) : ViewModel() {
 
-    private val repository = StarWarRepository()
 
     private var _planets: PlanetResponse? = null
 
