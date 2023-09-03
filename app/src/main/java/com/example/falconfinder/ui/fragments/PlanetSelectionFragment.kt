@@ -18,6 +18,7 @@ import com.example.falconfinder.ui.ItemClickListener
 import com.example.falconfinder.ui.PlanetVehicleAdapter
 import com.example.falconfinder.ui.PlanetVehicleItemDecorator
 import com.example.falconfinder.ui.viewmodel.StarWarViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
@@ -25,13 +26,16 @@ import javax.inject.Inject
  * Use the [PlanetSelectionFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+@AndroidEntryPoint
 class PlanetSelectionFragment @Inject constructor(private val findFalconClickListener: FindFalconClickListener) : Fragment(), ItemClickListener {
 
     private lateinit var viewModel: StarWarViewModel
 
     @Inject lateinit var adapter: PlanetVehicleAdapter
+    @Inject lateinit var vehicleBottomSheetFragment: VehicleBottomSheetFragment
     private lateinit var binding: FragmentPlanetSelectionBinding
-    private lateinit var vehicleBottomSheetFragment: VehicleBottomSheetFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -81,7 +85,7 @@ class PlanetSelectionFragment @Inject constructor(private val findFalconClickLis
     }
 
     private fun initRv() {
-        adapter = PlanetVehicleAdapter(this)
+//        adapter = PlanetVehicleAdapter(this)
 
         binding.planetsRv.addItemDecoration(PlanetVehicleItemDecorator())
 

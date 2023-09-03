@@ -11,6 +11,7 @@ import com.example.falconfinder.databinding.FragmentFalconFinderResultBinding
 import com.example.falconfinder.ui.FindFalconClickListener
 import com.example.falconfinder.ui.viewmodel.StarWarViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,7 +24,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 @AndroidEntryPoint
-class FalconFinderResultFragment(private val findFalconClickListener: FindFalconClickListener) : Fragment() {
+class FalconFinderResultFragment @Inject constructor(private val findFalconClickListener: FindFalconClickListener) : Fragment() {
 
     lateinit var binding: FragmentFalconFinderResultBinding
     lateinit var viewModel: StarWarViewModel
