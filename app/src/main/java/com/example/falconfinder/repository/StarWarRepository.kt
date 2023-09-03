@@ -5,10 +5,9 @@ import com.example.falconfinder.models.FalconFinderRequestBody
 import com.example.falconfinder.models.FalconFinderResponse
 import com.example.falconfinder.models.PlanetResponse
 import com.example.falconfinder.models.VehicleResponse
+import javax.inject.Inject
 
-class StarWarRepository() {
-
-    private val networkDataSource = NetworkDataSource()
+class StarWarRepository @Inject constructor(private val networkDataSource: NetworkDataSource) {
 
     suspend fun getPlanets(): PlanetResponse{
         return onGetPlanetsResponse(networkDataSource.getPlanets())

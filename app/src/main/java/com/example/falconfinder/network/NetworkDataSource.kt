@@ -7,9 +7,12 @@ import com.example.falconfinder.models.VehicleResponse
 import com.example.falconfinder.services.PlanetAndRocketServices
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Retrofit
+import javax.inject.Inject
 
-class NetworkDataSource {
-    private val service = PlanetApi.retrofit.create(PlanetAndRocketServices::class.java)
+class NetworkDataSource @Inject constructor(retrofit: Retrofit) {
+
+    private val service = retrofit.create(PlanetAndRocketServices::class.java)
     suspend fun getPlanets(): PlanetResponse{
         return withContext(Dispatchers.IO) {
             return@withContext service.getPlanetList()

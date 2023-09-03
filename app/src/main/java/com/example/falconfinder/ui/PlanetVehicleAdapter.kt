@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.falconfinder.R
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
+import javax.inject.Inject
 
-class PlanetVehicleAdapter(val itemClickListener: ItemClickListener):
+
+class PlanetVehicleAdapter @Inject constructor(private val itemClickListener: ItemClickListener):
     ListAdapter<Any, RecyclerView.ViewHolder>(PlanetDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

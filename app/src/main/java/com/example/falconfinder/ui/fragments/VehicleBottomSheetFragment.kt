@@ -14,7 +14,9 @@ import com.example.falconfinder.ui.PlanetVehicleAdapter
 import com.example.falconfinder.ui.PlanetVehicleItemDecorator
 import com.example.falconfinder.ui.viewmodel.StarWarViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class VehicleBottomSheetFragment : BottomSheetDialogFragment(), ItemClickListener {
 
     private lateinit var binding: BottomSheetVehicleFragmentBinding

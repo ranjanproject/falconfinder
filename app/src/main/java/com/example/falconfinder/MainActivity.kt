@@ -10,10 +10,20 @@ import com.example.falconfinder.databinding.ActivityMainBinding
 import com.example.falconfinder.ui.FindFalconClickListener
 import com.example.falconfinder.ui.fragments.FalconFinderResultFragment
 import com.example.falconfinder.ui.fragments.PlanetSelectionFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), FindFalconClickListener {
 
     private lateinit var binding: ActivityMainBinding
+
+//    @Inject
+//    lateinit var planetSelectionFragment: PlanetSelectionFragment
+//
+//    @Inject
+//    lateinit var falconFinderResultFragment: FalconFinderResultFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

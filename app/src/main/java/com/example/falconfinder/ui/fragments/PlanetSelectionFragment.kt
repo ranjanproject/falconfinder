@@ -18,16 +18,18 @@ import com.example.falconfinder.ui.ItemClickListener
 import com.example.falconfinder.ui.PlanetVehicleAdapter
 import com.example.falconfinder.ui.PlanetVehicleItemDecorator
 import com.example.falconfinder.ui.viewmodel.StarWarViewModel
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  * Use the [PlanetSelectionFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PlanetSelectionFragment(private val findFalconClickListener: FindFalconClickListener) : Fragment(), ItemClickListener {
+class PlanetSelectionFragment @Inject constructor(private val findFalconClickListener: FindFalconClickListener) : Fragment(), ItemClickListener {
 
     private lateinit var viewModel: StarWarViewModel
-    private lateinit var adapter: PlanetVehicleAdapter
+
+    @Inject lateinit var adapter: PlanetVehicleAdapter
     private lateinit var binding: FragmentPlanetSelectionBinding
     private lateinit var vehicleBottomSheetFragment: VehicleBottomSheetFragment
     override fun onCreate(savedInstanceState: Bundle?) {

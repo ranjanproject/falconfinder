@@ -10,6 +10,7 @@ import com.example.falconfinder.R
 import com.example.falconfinder.databinding.FragmentFalconFinderResultBinding
 import com.example.falconfinder.ui.FindFalconClickListener
 import com.example.falconfinder.ui.viewmodel.StarWarViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +22,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FalconFinderResultFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class FalconFinderResultFragment(private val findFalconClickListener: FindFalconClickListener) : Fragment() {
 
     lateinit var binding: FragmentFalconFinderResultBinding
@@ -56,14 +58,4 @@ class FalconFinderResultFragment(private val findFalconClickListener: FindFalcon
         }
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(findFalconClickListener: FindFalconClickListener) =
-            FalconFinderResultFragment(findFalconClickListener).apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
 }
