@@ -57,7 +57,6 @@ class PlanetSelectionFragment @Inject constructor(private val findFalconClickLis
 
        binding.findFalconBtn.setOnClickListener {
 
-           findFalconClickListener.onFindFalconBtnClicked()
 
            viewModel.findFalcon()
 
@@ -95,6 +94,10 @@ class PlanetSelectionFragment @Inject constructor(private val findFalconClickLis
 
         viewModel.isFindFalconBtn.observe(viewLifecycleOwner) {
             binding.findFalconBtn.isClickable = it
+        }
+
+        viewModel.falconResultLD.observe(viewLifecycleOwner) {
+            findFalconClickListener.onFindFalconBtnClicked()
         }
     }
 

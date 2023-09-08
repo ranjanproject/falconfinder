@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.falconfinder.models.FalconFinderRequestBody
+import com.example.falconfinder.models.FalconFinderResponse
 import com.example.falconfinder.models.PlanetResponse
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
-import com.example.falconfinder.network.Result
 import com.example.falconfinder.repository.StarWarRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -36,7 +36,15 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
 
     private var token: String = ""
 
+    private val _falconResultMLD = MutableLiveData<FalconFinderResponse>()
+
+    val falconResultLD = _falconResultMLD
+
+    var falconResult: FalconFinderResponse? = null
+
     val isFindFalconBtn = MutableLiveData<Boolean>()
+
+    var timeTaken = 0
 
     fun getToken() {
         viewModelScope.launch {
@@ -72,8 +80,9 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
     fun findFalcon() {
         viewModelScope.launch {
             try {
-                val x = repository.findFalcon(getFalconRequestBody())
-                val y = 0
+                falconResult = repository.findFalcon(getFalconRequestBody())
+
+                _falconResultMLD.value = falconResult
             } catch (e: Exception) {
                 Log.e("viewModel", e.toString())
 
@@ -197,7 +206,17 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
         }
         vehicleResponseItem.isSelected = isSelected
 
+        updateTime(planetDistance, vehicleResponseItem, isSelected)
         updateRocketMap(planetName, isSelected, vehicleResponseItem)
+    }
+
+    private fun updateTime(
+        planetDistance: String,
+        vehicleResponseItem: VehicleResponseItem,
+        isSelected: Boolean
+    ) {
+      val time = planetDistance.toInt()/vehicleResponseItem.speed
+      timeTaken += if(isSelected)time else -time
     }
 
     private fun updateRocketMap(

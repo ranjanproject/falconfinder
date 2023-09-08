@@ -32,14 +32,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_tv"
-        android:text="time taken:" />
+        android:text="@string/time_taken_time" />
 
     <TextView
         android:id="@+id/planet_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Found On:"
+        android:text="@string/found_on"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,7 @@
         android:id="@+id/start_again_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Again"
+        android:text="@string/start_again"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

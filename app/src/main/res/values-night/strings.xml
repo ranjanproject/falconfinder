@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="game_rule">Game Rule</string>
+    <string name="found_on">Found On: {planet}</string>
+    <string name="start_again">Start Again</string>
+    <string name="time_taken_time">Time Taken: {time}</string>
 </resources>

@@ -37,9 +37,20 @@ class FalconFinderResultFragment @Inject constructor(private val findFalconClick
     }
 
     private fun initViews() {
-
+         setViews()
         setOnClickListener()
 
+    }
+
+    private fun setViews() {
+        var planetName: String = ""
+         viewModel.falconResult?.planetName?.apply {
+           planetName = getString(R.string.found_on).replace("{planet}", this)
+        }
+        binding.planetTv.text = planetName
+
+        binding.timeTakenTv.text = getString(R.string.time_taken_time)
+            .replace("{time}",  viewModel.timeTaken.toString())
     }
 
     private fun setOnClickListener() {

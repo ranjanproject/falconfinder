@@ -18,12 +18,6 @@ class MainActivity : AppCompatActivity(), FindFalconClickListener {
 
     private lateinit var binding: ActivityMainBinding
 
-//    @Inject
-//    lateinit var planetSelectionFragment: PlanetSelectionFragment
-
-//    @Inject
-//    lateinit var falconFinderResultFragment: FalconFinderResultFragment
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
