@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class FalconFinderRequestBody(
     @SerializedName("token")
     val token: String,
-    @SerializedName("planet_name")
+    @SerializedName("planet_names")
     val planets: List<String>,
-    @SerializedName("vehicle_name")
+    @SerializedName("vehicle_names")
     val vehicles: List<String>
 )
