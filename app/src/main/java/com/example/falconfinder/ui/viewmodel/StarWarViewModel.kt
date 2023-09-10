@@ -10,7 +10,7 @@ import com.example.falconfinder.models.PlanetResponse
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
 import com.example.falconfinder.repository.StarWarRepository
-import com.example.falconfinder.ui.ControlSelectedPlanet
+import com.example.falconfinder.util.ControlSelectedPlanet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

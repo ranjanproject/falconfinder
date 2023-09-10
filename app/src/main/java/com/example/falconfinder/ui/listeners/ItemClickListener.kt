@@ -1,4 +1,4 @@
-package com.example.falconfinder.ui
+package com.example.falconfinder.ui.listeners
 
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem

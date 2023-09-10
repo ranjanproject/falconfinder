@@ -1,4 +1,4 @@
-package com.example.falconfinder.ui
+package com.example.falconfinder.ui.adapter
 
 import android.graphics.Rect
 import android.view.View

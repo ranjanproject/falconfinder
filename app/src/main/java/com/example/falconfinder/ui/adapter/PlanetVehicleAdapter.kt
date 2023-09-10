@@ -1,4 +1,4 @@
-package com.example.falconfinder.ui
+package com.example.falconfinder.ui.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.falconfinder.R
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
+import com.example.falconfinder.ui.listeners.ItemClickListener
 import javax.inject.Inject
 
 

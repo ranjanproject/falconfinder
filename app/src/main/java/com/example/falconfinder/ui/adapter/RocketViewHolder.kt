@@ -1,4 +1,4 @@
-package com.example.falconfinder.ui
+package com.example.falconfinder.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.falconfinder.R
 import com.example.falconfinder.databinding.ItemVehicleBinding
 import com.example.falconfinder.models.VehicleResponseItem
+import com.example.falconfinder.ui.listeners.ItemClickListener
 
 class RocketViewHolder(private val binding: ItemVehicleBinding) :
     RecyclerView.ViewHolder(binding.root) {

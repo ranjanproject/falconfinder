@@ -1,4 +1,4 @@
-package com.example.falconfinder
+package com.example.falconfinder.util
 
 class AppConstants {
     companion object {

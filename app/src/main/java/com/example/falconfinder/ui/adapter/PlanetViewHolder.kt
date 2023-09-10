@@ -1,4 +1,4 @@
-package com.example.falconfinder.ui
+package com.example.falconfinder.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.falconfinder.R
 import com.example.falconfinder.databinding.ItemPlanetBinding
 import com.example.falconfinder.models.PlanetResponseItem
+import com.example.falconfinder.ui.listeners.ItemClickListener
 
 class PlanetViewHolder(private val binding: ItemPlanetBinding): RecyclerView.ViewHolder(binding.root) {
 
@@ -18,7 +19,7 @@ class PlanetViewHolder(private val binding: ItemPlanetBinding): RecyclerView.Vie
         private const val LERBIN = "Lerbin"
         private const val PINGSOR = "Pingasor"
 
-        fun create(viewGroup: ViewGroup): PlanetViewHolder{
+        fun create(viewGroup: ViewGroup): PlanetViewHolder {
             val inflater = LayoutInflater.from(viewGroup.context)
             val binding = ItemPlanetBinding.inflate(inflater, viewGroup, false)
             return PlanetViewHolder(binding)

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.falconfinder.R
 import com.example.falconfinder.databinding.FragmentFalconFinderResultBinding
-import com.example.falconfinder.ui.FindFalconClickListener
+import com.example.falconfinder.ui.listeners.FindFalconClickListener
 import com.example.falconfinder.ui.viewmodel.StarWarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

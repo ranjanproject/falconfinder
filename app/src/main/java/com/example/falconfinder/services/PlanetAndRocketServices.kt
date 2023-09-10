@@ -1,6 +1,6 @@
 package com.example.falconfinder.services
 
-import com.example.falconfinder.AppConstants
+import com.example.falconfinder.util.AppConstants
 import com.example.falconfinder.models.FalconFinderRequestBody
 import com.example.falconfinder.models.FalconFinderResponse
 import com.example.falconfinder.models.PlanetResponse

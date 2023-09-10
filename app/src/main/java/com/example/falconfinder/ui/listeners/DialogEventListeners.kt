@@ -1,4 +1,4 @@
-package com.example.falconfinder.ui
+package com.example.falconfinder.ui.listeners
 
 interface DialogEventListeners {
 

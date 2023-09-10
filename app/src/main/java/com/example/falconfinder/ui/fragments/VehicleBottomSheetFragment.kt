@@ -11,17 +11,18 @@ import com.example.falconfinder.R
 import com.example.falconfinder.databinding.BottomSheetVehicleFragmentBinding
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
-import com.example.falconfinder.ui.DialogEventListeners
-import com.example.falconfinder.ui.ItemClickListener
-import com.example.falconfinder.ui.PlanetVehicleAdapter
-import com.example.falconfinder.ui.PlanetVehicleItemDecorator
+import com.example.falconfinder.ui.listeners.DialogEventListeners
+import com.example.falconfinder.ui.listeners.ItemClickListener
+import com.example.falconfinder.ui.adapter.PlanetVehicleAdapter
+import com.example.falconfinder.ui.adapter.PlanetVehicleItemDecorator
 import com.example.falconfinder.ui.viewmodel.StarWarViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VehicleBottomSheetFragment @Inject constructor(private  val dialogInterface: DialogEventListeners) : BottomSheetDialogFragment(), ItemClickListener {
+class VehicleBottomSheetFragment @Inject constructor(private  val dialogInterface: DialogEventListeners) : BottomSheetDialogFragment(),
+    ItemClickListener {
 
     private lateinit var binding: BottomSheetVehicleFragmentBinding
     private var planetName = ""

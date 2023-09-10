@@ -1,17 +1,16 @@
-package com.example.falconfinder
+package com.example.falconfinder.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
 import android.widget.Toast
+import com.example.falconfinder.R
 import com.example.falconfinder.databinding.ActivityMainBinding
-import com.example.falconfinder.ui.FindFalconClickListener
+import com.example.falconfinder.ui.listeners.FindFalconClickListener
 import com.example.falconfinder.ui.fragments.FalconFinderResultFragment
 import com.example.falconfinder.ui.fragments.PlanetSelectionFragment
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), FindFalconClickListener {

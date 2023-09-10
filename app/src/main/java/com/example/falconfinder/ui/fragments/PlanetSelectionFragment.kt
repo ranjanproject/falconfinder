@@ -1,6 +1,5 @@
 package com.example.falconfinder.ui.fragments
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,20 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.falconfinder.R
 import com.example.falconfinder.databinding.FragmentPlanetSelectionBinding
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
-import com.example.falconfinder.ui.DialogEventListeners
-import com.example.falconfinder.ui.FindFalconClickListener
-import com.example.falconfinder.ui.ItemClickListener
-import com.example.falconfinder.ui.PlanetVehicleAdapter
-import com.example.falconfinder.ui.PlanetVehicleItemDecorator
+import com.example.falconfinder.ui.listeners.DialogEventListeners
+import com.example.falconfinder.ui.listeners.FindFalconClickListener
+import com.example.falconfinder.ui.listeners.ItemClickListener
+import com.example.falconfinder.ui.adapter.PlanetVehicleAdapter
+import com.example.falconfinder.ui.adapter.PlanetVehicleItemDecorator
 import com.example.falconfinder.ui.viewmodel.StarWarViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Objects
 import javax.inject.Inject
 
 @AndroidEntryPoint

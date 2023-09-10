@@ -1,4 +1,4 @@
-package com.example.falconfinder.ui
+package com.example.falconfinder.util
 
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty

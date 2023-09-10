@@ -1,4 +1,4 @@
-package com.example.falconfinder.ui
+package com.example.falconfinder.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.falconfinder.models.PlanetResponseItem
