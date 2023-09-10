@@ -17,44 +17,61 @@
 
         <TextView
             android:id="@+id/planet_name_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/hello_blank_fragment"
-            app:layout_constraintEnd_toStartOf="@+id/planet_distance_tv"
-            app:layout_constraintHorizontal_bias="0.5"
+            android:textSize="20sp"
+            android:padding="@dimen/margin_small"
+            app:layout_constraintHorizontal_bias="0"
+            android:text="@string/select_vehicle_for"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/planet_distance_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="distance"
+            android:text="@string/distance"
+            android:layout_marginStart="@dimen/margin_small"
+            android:paddingBottom="@dimen/margin_medium"
             app:layout_constraintEnd_toStartOf="@+id/time_tv"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/planet_name_tv"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/planet_name_tv" />
 
         <TextView
             android:id="@+id/time_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="time:"
-            app:layout_constraintTop_toTopOf="parent"
+            android:paddingBottom="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:text="@string/time_taken_time"
+            app:layout_constraintHorizontal_bias="1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/planet_distance_tv" />
+            app:layout_constraintStart_toEndOf="@+id/planet_distance_tv"
+            app:layout_constraintTop_toBottomOf="@id/planet_name_tv" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rocket_rv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:padding="@dimen/margin_small"
             android:clipToPadding="false"
+            android:padding="@dimen/margin_small"
+            app:layout_constraintBottom_toTopOf="@id/submit_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/planet_distance_tv" />
+
+        <Button
+            android:id="@+id/submit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:textColor="@color/white"
+            android:layout_marginBottom="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/planet_name_tv" />
+            android:text="@string/submit" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

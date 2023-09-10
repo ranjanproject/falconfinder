@@ -29,9 +29,12 @@ class PlanetViewHolder(private val binding: ItemPlanetBinding): RecyclerView.Vie
 
         binding.planetNameTv.text = planetResponseItem.name
 
-        binding.distanceTv.text = planetResponseItem.distance.toString()
 
         binding.planetCl.isSelected = planetResponseItem.isSelected
+
+        val distance = planetResponseItem.distance.toString()
+
+        binding.distanceTv.text = binding.root.resources.getString(R.string.distance).replace("{dist}", distance)
 
         planetResponseItem.name?.let { getImageResource(it) }
             ?.let { binding.planetIv.setImageResource(it) }

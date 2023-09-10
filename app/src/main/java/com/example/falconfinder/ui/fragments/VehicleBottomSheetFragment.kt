@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.falconfinder.R
 import com.example.falconfinder.databinding.BottomSheetVehicleFragmentBinding
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
@@ -60,7 +61,7 @@ class VehicleBottomSheetFragment @Inject constructor(private  val dialogInterfac
 
     private fun initViews() {
         setNames()
-
+        setClickListener()
         binding.rocketRv.layoutManager = LinearLayoutManager(requireContext())
 
         binding.rocketRv.addItemDecoration(PlanetVehicleItemDecorator())
@@ -71,13 +72,20 @@ class VehicleBottomSheetFragment @Inject constructor(private  val dialogInterfac
 
     }
 
-   private fun submitList(list: List<VehicleResponseItem>){
+    private fun setClickListener() {
+        binding.submitBtn.setOnClickListener {
+            dialog?.cancel()
+        }
+    }
+
+    private fun submitList(list: List<VehicleResponseItem>){
         adapter.submitList(list.toMutableList<Any>())
     }
 
     private fun setNames() {
-        binding.planetNameTv.text = planetName
-        binding.planetDistanceTv.text = planetDistance
+        binding.planetNameTv.text = getString(R.string.select_vehicle_for).replace("{planet}", planetName)
+        binding.planetDistanceTv.text = getString(R.string.distance).replace("{dist}", planetDistance)
+        binding.timeTv.text = getString(R.string.time_taken_time).replace("{time}", "0")
     }
 
     override fun onPlanetClicked(planetResponseItem: PlanetResponseItem, isSelected: Boolean) {
@@ -90,6 +98,12 @@ class VehicleBottomSheetFragment @Inject constructor(private  val dialogInterfac
     ) {
         viewModel.selectRocket(planetName, planetDistance, vehicleResponseItem, isSelected)
         submitList(viewModel.getVehicleList())
+        updateTime(vehicleResponseItem.speed, isSelected)
+    }
+
+    private fun updateTime(vehicleSpeed: Int, isSelected: Boolean){
+        val time = if(isSelected) planetDistance.toInt()/vehicleSpeed else 0
+        binding.timeTv.text = getString(R.string.time_taken_time).replace("{time}", time.toString())
     }
 
     override fun dismiss() {

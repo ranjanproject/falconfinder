@@ -66,6 +66,7 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
         _planetsMLD.value = ArrayList()
         _falconResultMLD.value = FalconFinderResponse("")
         timeTaken = 0
+        isFindFalconBtn.value = false
     }
 
     //<editor-fold desc = "Planet">
