@@ -20,7 +20,8 @@ import kotlin.Exception
  */
 
 @HiltViewModel
-class StarWarViewModel @Inject constructor(private val repository: StarWarRepository) : ViewModel() {
+class StarWarViewModel @Inject constructor(private val repository: StarWarRepository) :
+    ViewModel() {
 
     private var _planets: PlanetResponse? = null
 
@@ -127,10 +128,13 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
 
             val vehicle = rocketMap[planetResponseItem.name]
 
-            vehicle?.total_no = vehicle?.total_no!! + 1
-            vehicle.isActive = true
+            vehicle?.let {
+                it.total_no = it.total_no + 1
+                it.isActive = true
+                it.isSelected = false
+            }
 
-            rocketMap[planetResponseItem.name!!] = null
+            rocketMap.remove(planetResponseItem.name!!)
         }
     }
 
@@ -175,13 +179,26 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
     }
 
 
-    fun getAvailableVehicles(planetName: String): List<VehicleResponseItem> {
-        for (item in rocketMap) {
-            item.value?.let {
-                it.isActive = it.total_no > 0
-                it.isSelected = false
+    fun getAvailableVehicles(
+        planetName: String,
+        planetDistance: String
+    ): List<VehicleResponseItem> {
+
+        for (item in _vehicleResponse) {
+            item.apply {
+                isActive = planetDistance.toInt() <= max_distance
             }
         }
+
+        for (item in rocketMap) {
+            item.value?.apply {
+                if(isActive) {
+                    isActive = total_no > 0
+                }
+                isSelected = false
+            }
+        }
+
         return _vehicleResponse
     }
 
@@ -194,15 +211,19 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
     ) {
 
         if (isSelected) {
-            vehicleResponseItem.total_no--
-            for (item in _vehicleResponse) {
-                if (item != vehicleResponseItem && item.isSelected && item.isActive) {
-                    item.isSelected = false
-                    item.total_no++
+            if(!rocketMap.containsKey(planetName)) {
+                vehicleResponseItem.total_no--
+                for (item in _vehicleResponse) {
+                    if (item != vehicleResponseItem && item.isSelected && item.isActive) {
+                        item.isSelected = false
+                        item.total_no++
+                    }
                 }
             }
         } else {
-            vehicleResponseItem.total_no++
+            if(rocketMap.containsKey(planetName)) {
+                vehicleResponseItem.total_no++
+            }
         }
         vehicleResponseItem.isSelected = isSelected
 
@@ -215,8 +236,8 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
         vehicleResponseItem: VehicleResponseItem,
         isSelected: Boolean
     ) {
-      val time = planetDistance.toInt()/vehicleResponseItem.speed
-      timeTaken += if(isSelected)time else -time
+        val time = planetDistance.toInt() / vehicleResponseItem.speed
+        timeTaken += if (isSelected) time else -time
     }
 
     private fun updateRocketMap(
@@ -227,9 +248,27 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
         if (isSelected) {
             rocketMap[planetName] = vehicleResponseItem
         } else {
-            rocketMap[planetName] = null
+            if (rocketMap.containsKey(planetName)) {
+                rocketMap.remove(planetName)
+            }
         }
     }
     //</editor-fold>
+
+    fun checkVehicleSelectedForPlanet(planetName: String) {
+        if (!rocketMap.containsKey(planetName)) {
+            _planets?.let {
+                it.forEach { planet ->
+                    if (planet.name == planetName) {
+                        selectedPlanetCount--
+                        planet.isSelected = false
+                        enableFindFalconBtn()
+                        _planetsMLD.value = (it.toMutableList()) as ArrayList<PlanetResponseItem>
+                        return@let
+                    }
+                }
+            }
+        }
+    }
 
 }

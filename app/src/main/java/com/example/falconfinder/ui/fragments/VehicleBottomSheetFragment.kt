@@ -1,15 +1,16 @@
 package com.example.falconfinder.ui.fragments
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.falconfinder.databinding.BottomSheetVehicleFragmentBinding
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
+import com.example.falconfinder.ui.DialogEventListeners
 import com.example.falconfinder.ui.ItemClickListener
 import com.example.falconfinder.ui.PlanetVehicleAdapter
 import com.example.falconfinder.ui.PlanetVehicleItemDecorator
@@ -19,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class VehicleBottomSheetFragment @Inject constructor() : BottomSheetDialogFragment(), ItemClickListener {
+class VehicleBottomSheetFragment @Inject constructor(private  val dialogInterface: DialogEventListeners) : BottomSheetDialogFragment(), ItemClickListener {
 
     private lateinit var binding: BottomSheetVehicleFragmentBinding
     private var planetName = ""
@@ -32,15 +33,6 @@ class VehicleBottomSheetFragment @Inject constructor() : BottomSheetDialogFragme
 
         const val PLANET_NAME = "planetName"
         const val PLANET_DISTANCE = "planetDistance"
-
-        @JvmStatic
-        fun newInstance(planetName: String, distance: String) =
-            VehicleBottomSheetFragment().apply {
-                val bundle = Bundle()
-                bundle.putString(PLANET_NAME, planetName)
-                bundle.putString(PLANET_DISTANCE, distance)
-                arguments = bundle
-            }
 
     }
 
@@ -75,7 +67,7 @@ class VehicleBottomSheetFragment @Inject constructor() : BottomSheetDialogFragme
 
         binding.rocketRv.adapter = adapter
 
-        submitList(viewModel.getAvailableVehicles(planetName))
+        submitList(viewModel.getAvailableVehicles(planetName, planetDistance))
 
     }
 
@@ -98,5 +90,22 @@ class VehicleBottomSheetFragment @Inject constructor() : BottomSheetDialogFragme
     ) {
         viewModel.selectRocket(planetName, planetDistance, vehicleResponseItem, isSelected)
         submitList(viewModel.getVehicleList())
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        dialogInterface.onDismiss(planetName)
+        clearDialogData()
+    }
+
+    override fun onCancel(dialog: DialogInterface) {
+        super.onCancel(dialog)
+        dialogInterface.onCancel(planetName)
+        clearDialogData()
+    }
+
+    private fun clearDialogData(){
+        planetName = ""
+        planetDistance = ""
     }
 }

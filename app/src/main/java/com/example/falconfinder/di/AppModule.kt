@@ -1,8 +1,10 @@
 package com.example.falconfinder.di
 
 import android.app.Activity
+import android.content.DialogInterface
 import androidx.fragment.app.Fragment
 import com.example.falconfinder.MainActivity
+import com.example.falconfinder.ui.DialogEventListeners
 import com.example.falconfinder.ui.FindFalconClickListener
 import com.example.falconfinder.ui.ItemClickListener
 import dagger.Binds
@@ -27,5 +29,12 @@ class ItemClickListenerModule{
 object FindFalconClickListenerModule{
     @Provides
     fun provideCallBack(activity: MainActivity) = activity as FindFalconClickListener
+}
+
+@Module
+@InstallIn(FragmentComponent::class)
+class DialogInterfaceListenerModule{
+    @Provides
+    fun provideDialogInterFaceCallBack(fragment: Fragment) = fragment as DialogEventListeners
 }
 

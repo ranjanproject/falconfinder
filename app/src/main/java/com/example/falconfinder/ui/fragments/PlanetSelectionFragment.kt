@@ -1,5 +1,6 @@
 package com.example.falconfinder.ui.fragments
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,16 +15,19 @@ import com.example.falconfinder.R
 import com.example.falconfinder.databinding.FragmentPlanetSelectionBinding
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
+import com.example.falconfinder.ui.DialogEventListeners
 import com.example.falconfinder.ui.FindFalconClickListener
 import com.example.falconfinder.ui.ItemClickListener
 import com.example.falconfinder.ui.PlanetVehicleAdapter
 import com.example.falconfinder.ui.PlanetVehicleItemDecorator
 import com.example.falconfinder.ui.viewmodel.StarWarViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Objects
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PlanetSelectionFragment @Inject constructor(private val findFalconClickListener: FindFalconClickListener) : Fragment(), ItemClickListener {
+class PlanetSelectionFragment @Inject constructor(private val findFalconClickListener: FindFalconClickListener) :
+    Fragment(), ItemClickListener, DialogEventListeners {
 
     private val viewModel by activityViewModels<StarWarViewModel>()
 
@@ -55,13 +59,19 @@ class PlanetSelectionFragment @Inject constructor(private val findFalconClickLis
        initRv()
        initViewModel()
 
-       binding.findFalconBtn.setOnClickListener {
+       initListeners()
+
+    }
+
+    private fun initListeners() {
+
+        binding.findFalconBtn.setOnClickListener {
 
 
-           viewModel.findFalcon()
+            viewModel.findFalcon()
 
 
-       }
+        }
     }
 
     private fun initViewModel() {
@@ -101,20 +111,11 @@ class PlanetSelectionFragment @Inject constructor(private val findFalconClickLis
         }
     }
 
-
-    companion object {
-
-        @JvmStatic
-        fun newInstance(findFalconClickListener: FindFalconClickListener) =
-            PlanetSelectionFragment(findFalconClickListener).apply {
-
-            }
-
-    }
-
     override fun onPlanetClicked(planetResponseItem: PlanetResponseItem, isSelected: Boolean) {
+
         viewModel.selectPlanet(planetResponseItem, isSelected)
-        if(isSelected) {
+
+        if(isSelected && !vehicleBottomSheetFragment.isAdded) {
             val bundle = Bundle()
             bundle.putString(VehicleBottomSheetFragment.PLANET_NAME, planetResponseItem.name)
             bundle.putString(
@@ -123,11 +124,21 @@ class PlanetSelectionFragment @Inject constructor(private val findFalconClickLis
             )
             vehicleBottomSheetFragment.arguments = bundle
             vehicleBottomSheetFragment.show(childFragmentManager, "BottomSheet")
+        }else{
+            vehicleBottomSheetFragment.dismiss()
         }
 
     }
 
     override fun onVehicleClickListener(vehicleResponseItem: VehicleResponseItem, isSelected: Boolean) {
 
+    }
+
+    override fun onCancel(planetName: String) {
+        viewModel.checkVehicleSelectedForPlanet(planetName)
+    }
+
+    override fun onDismiss(planetName: String) {
+        val y = 0
     }
 }
