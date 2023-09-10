@@ -10,6 +10,7 @@ import com.example.falconfinder.models.PlanetResponse
 import com.example.falconfinder.models.PlanetResponseItem
 import com.example.falconfinder.models.VehicleResponseItem
 import com.example.falconfinder.repository.StarWarRepository
+import com.example.falconfinder.ui.ControlSelectedPlanet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,7 +34,7 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
 
     private var _vehicleResponse = mutableListOf<VehicleResponseItem>()
 
-    private var selectedPlanetCount = 0
+    private var selectedPlanetCount by ControlSelectedPlanet()
 
     private var token: String = ""
 
@@ -213,19 +214,15 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
     ) {
 
         if (isSelected) {
-            if (!rocketMap.containsKey(planetName)) {
-                vehicleResponseItem.total_no--
-                for (item in _vehicleResponse) {
-                    if (item != vehicleResponseItem && item.isSelected && item.isActive) {
+             vehicleResponseItem.total_no--
+             for (item in _vehicleResponse) {
+                    if (item.isSelected && item.isActive) {
                         item.isSelected = false
                         item.total_no++
                     }
-                }
-            }
+             }
         } else {
-            if (rocketMap.containsKey(planetName)) {
-                vehicleResponseItem.total_no++
-            }
+            vehicleResponseItem.total_no++
         }
         vehicleResponseItem.isSelected = isSelected
 
