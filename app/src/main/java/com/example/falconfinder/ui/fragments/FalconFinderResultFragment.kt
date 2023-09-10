@@ -43,7 +43,7 @@ class FalconFinderResultFragment @Inject constructor(private val findFalconClick
 
     private fun setViews() {
       val status = viewModel.falconResult?.status
-        if(status == "true") {
+        if(status != null && status == "success") {
            setSuccessView()
         }else{
            setFailureView()
