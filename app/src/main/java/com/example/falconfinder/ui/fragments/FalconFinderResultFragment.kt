@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import com.example.falconfinder.R
 import com.example.falconfinder.databinding.FragmentFalconFinderResultBinding
 import com.example.falconfinder.ui.FindFalconClickListener
@@ -43,14 +42,32 @@ class FalconFinderResultFragment @Inject constructor(private val findFalconClick
     }
 
     private fun setViews() {
+      val status = viewModel.falconResult?.status
+        if(status == "true") {
+           setSuccessView()
+        }else{
+           setFailureView()
+        }
+    }
+
+    private fun setSuccessView(){
         var planetName: String = ""
-         viewModel.falconResult?.planetName?.apply {
-           planetName = getString(R.string.found_on).replace("{planet}", this)
+        viewModel.falconResult?.planetName?.apply {
+            planetName = getString(R.string.found_on).replace("{planet}", this)
         }
         binding.planetTv.text = planetName
 
         binding.timeTakenTv.text = getString(R.string.time_taken_time)
-            .replace("{time}",  viewModel.timeTaken.toString())
+            .replace("{time}", viewModel.timeTaken.toString())
+
+        binding.timeTakenTv.visibility = View.VISIBLE
+        binding.planetTv.visibility = View.VISIBLE
+    }
+
+    private fun setFailureView(){
+        binding.titleTv.text  = getString(R.string.falcon_not_found)
+        binding.timeTakenTv.visibility = View.GONE
+        binding.planetTv.visibility = View.GONE
     }
 
     private fun setOnClickListener() {

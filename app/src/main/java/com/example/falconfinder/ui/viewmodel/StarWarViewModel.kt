@@ -63,6 +63,9 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
         rocketMap = mutableMapOf()
         token = ""
         _vehicleResponse = mutableListOf()
+        _planetsMLD.value = ArrayList()
+        _falconResultMLD.value = FalconFinderResponse("")
+        timeTaken = 0
     }
 
     //<editor-fold desc = "Planet">
@@ -118,8 +121,7 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
     }
 
     private fun updateSelectedPlanetCount(
-        planetResponseItem: PlanetResponseItem,
-        isSelected: Boolean
+        planetResponseItem: PlanetResponseItem, isSelected: Boolean
     ) {
         if (isSelected) {
             selectedPlanetCount++
@@ -180,8 +182,7 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
 
 
     fun getAvailableVehicles(
-        planetName: String,
-        planetDistance: String
+        planetName: String, planetDistance: String
     ): List<VehicleResponseItem> {
 
         for (item in _vehicleResponse) {
@@ -192,7 +193,7 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
 
         for (item in rocketMap) {
             item.value?.apply {
-                if(isActive) {
+                if (isActive) {
                     isActive = total_no > 0
                 }
                 isSelected = false
@@ -211,7 +212,7 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
     ) {
 
         if (isSelected) {
-            if(!rocketMap.containsKey(planetName)) {
+            if (!rocketMap.containsKey(planetName)) {
                 vehicleResponseItem.total_no--
                 for (item in _vehicleResponse) {
                     if (item != vehicleResponseItem && item.isSelected && item.isActive) {
@@ -221,7 +222,7 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
                 }
             }
         } else {
-            if(rocketMap.containsKey(planetName)) {
+            if (rocketMap.containsKey(planetName)) {
                 vehicleResponseItem.total_no++
             }
         }
@@ -232,18 +233,14 @@ class StarWarViewModel @Inject constructor(private val repository: StarWarReposi
     }
 
     private fun updateTime(
-        planetDistance: String,
-        vehicleResponseItem: VehicleResponseItem,
-        isSelected: Boolean
+        planetDistance: String, vehicleResponseItem: VehicleResponseItem, isSelected: Boolean
     ) {
         val time = planetDistance.toInt() / vehicleResponseItem.speed
         timeTaken += if (isSelected) time else -time
     }
 
     private fun updateRocketMap(
-        planetName: String,
-        isSelected: Boolean,
-        vehicleResponseItem: VehicleResponseItem
+        planetName: String, isSelected: Boolean, vehicleResponseItem: VehicleResponseItem
     ) {
         if (isSelected) {
             rocketMap[planetName] = vehicleResponseItem

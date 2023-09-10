@@ -4,4 +4,6 @@
     <string name="found_on">Found On: {planet}</string>
     <string name="start_again">Start Again</string>
     <string name="time_taken_time">Time Taken: {time}</string>
+    <string name="falcon_not_found">Oops! Falcon was not present on chosen planet. Lets try again. </string>
+
 </resources>
